@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MovieFlix Pro 3.1 — Merged</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+         :root {
+            --yellow: #ffcc00;
+            --bg: #070707;
+            --card: #0f1113;
+            --muted: #a9a9a9;
+            --glass: rgba(255, 255, 255, 0.04);
+            --accent: rgba(255, 204, 0, 0.12);
+            --max-width: 1200px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: var(--bg);
+            color: #fff;
+            min-height: 100vh;
+            line-height: 1.4;
+            transition: background .3s ease, color .3s ease;
+        }
+        /* NAV */
+        
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.6), rgba(8, 8, 8, 0.45));
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        
+        nav.shrink {
+            padding: 10px 24px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+        }
+        
+        .logo {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: 700
+        }
+        
+        .logo .mark {
+            font-size: 20px;
+            color: var(--yellow)
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            align-items: center
+        }
+        
+        .nav-links a {
+            color: #eaeaea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 6px 8px;
+            border-radius: 6px
+        }
+        
+        .nav-links a:hover {
+            color: var(--yellow)
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+        
+        .btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600
+        }
+        
+        .btn.primary {
+            background: var(--yellow);
+            color: #000;
+            border: none
+        }
+        
+        #userBadge {
+            background: transparent;
+            color: var(--yellow);
+            font-weight: 700;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: default
+        }
+        /* HERO */
+        
+        .hero {
+            position: relative;
+            min-height: 56vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px 16px;
+            overflow: hidden
+        }
+        
+        .hero video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(.45);
+            z-index: 0
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9));
+            z-index: 1
+        }
+        
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            padding: 20px
+        }
+        
+        .hero h1 {
+            font-size: 2.6rem;
+            color: var(--yellow);
+            margin-bottom: 12px
+        }
+        
+        .hero p {
+            color: #dedede;
+            margin-bottom: 16px;
+            font-size: 1.05rem
+        }
+        
+        .hero .cta {
+            display: flex;
+            gap: 12px;
+            justify-content: center
+        }
+        /* CONTROLS */
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            max-width: var(--max-width);
+            margin: 0 auto
+        }
+        
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+        
+        .filters button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: #fff
+        }
+        
+        .filters button.active {
+            background: var(--yellow);
+            color: #000;
+            border: none
+        }
+        
+        .search-box {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end
+        }
+        
+        .search-box input {
+            width: 360px;
+            max-width: 70vw;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: none;
+            background: #0b0b0b;
+            color: #fff;
+            outline: 1px solid rgba(255, 255, 255, 0.04)
+        }
+        /* GRID */
+        
+        #movie-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            padding: 24px;
+            max-width: var(--max-width);
+            margin: 0 auto
+        }
+        
+        .movie-card {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6);
+            transition: transform .25s, box-shadow .25s, border .25s;
+            border: 1px solid transparent;
+            cursor: pointer
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.75);
+            border-color: var(--accent)
+        }
+        
+        .poster {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            background: #0b0b0b
+        }
+        
+        .movie-info {
+            padding: 12px
+        }
+        
+        .movie-info h3 {
+            color: var(--yellow);
+            font-size: 1.02rem;
+            margin-bottom: 6px
+        }
+        
+        .movie-info p {
+            color: #cfcfcf;
+            font-size: .88rem;
+            margin-bottom: 8px
+        }
+        /* Hover overlay */
+        
+        .hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: opacity .2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 14px
+        }
+        
+        .movie-card:hover .hover-overlay {
+            opacity: 1
+        }
+        
+        .hover-overlay .desc {
+            color: #e6e6e6;
+            font-size: .9rem;
+            margin-bottom: 8px;
+            max-height: 84px;
+            overflow: hidden
+        }
+        
+        .hover-overlay .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+        /* rating & actions */
+        
+        .meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px
+        }
+        
+        .stars {
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
+        
+        .star {
+            font-size: 18px;
+            color: #555;
+            cursor: pointer;
+            user-select: none;
+            transition: color .12s;
+            border: none;
+            background: transparent;
+            padding: 0
+        }
+        
+        .star.active {
+            color: gold
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+        
+        .fav-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 6px 8px;
+            border-radius: 8px;
+            cursor: pointer
+        }
+        
+        .fav-btn.active {
+            background: rgba(255, 204, 0, 0.12);
+            border-color: var(--yellow);
+            color: var(--yellow)
+        }
+        /* modals */
+        
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1200;
+            padding: 18px
+        }
+        
+        .modal.show {
+            display: flex
+        }
+        
+        .modal-card {
+            background: linear-gradient(180deg, #0b0b0b, #111);
+            border-radius: 12px;
+            padding: 16px;
+            max-width: 980px;
+            width: 100%;
+            display: flex;
+            gap: 16px;
+            color: #fff;
+            align-items: flex-start
+        }
+        
+        .md-left img {
+            width: 320px;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #111
+        }
+        
+        .md-right {
+            flex: 1
+        }
+        
+        .md-right h2 {
+            color: var(--yellow);
+            margin-bottom: 8px
+        }
+        
+        .md-right p {
+            color: #ccc;
+            margin-bottom: 10px
+        }
+        
+        .md-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap
+        }
+        /* option modal (card-click) */
+        
+        .option-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1250;
+            padding: 18px
+        }
+        
+        .option-modal.show {
+            display: flex
+        }
+        
+        .option-card {
+            background: linear-gradient(180deg, #0b0b0b, #121212);
+            border-radius: 12px;
+            padding: 18px;
+            width: 360px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6)
+        }
+        
+        .option-card h3 {
+            color: var(--yellow);
+            margin-bottom: 10px
+        }
+        
+        .option-card .opt-btn {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700
+        }
+        
+        .opt-watch {
+            background: var(--yellow);
+            color: #000
+        }
+        
+        .opt-fav {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #fff
+        }
+        
+        .opt-details {
+            background: #0b84ff;
+            color: #fff
+        }
+        /* auth card */
+        
+        .auth-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 12px;
+            padding: 18px;
+            width: 360px;
+            color: #fff;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.7)
+        }
+        
+        .auth-card h3 {
+            color: var(--yellow);
+            margin-bottom: 8px
+        }
+        
+        .auth-card input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            margin: 8px 0
+        }
+        /* trailer embed wrap */
+        
+        #trailerWrap {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000
+        }
+        /* small screens */
+        
+        @media (max-width:880px) {
+            .md-left img {
+                width: 220px;
+                height: 320px
+            }
+            .poster {
+                height: 260px
+            }
+            .hero h1 {
+                font-size: 1.8rem
+            }
+        }
+        
+        @media (max-width:520px) {
+            nav {
+                padding: 12px
+            }
+            .nav-links {
+                display: none
+            }
+            #movie-list {
+                padding: 16px;
+                gap: 12px
+            }
+            .modal-card {
+                flex-direction: column;
+                align-items: center
+            }
+            .md-left img {
+                width: 100%;
+                height: auto
+            }
+        }
+        /* LIGHT MODE */
+        
+        body.light {
+            background: #f6f6f6;
+            color: #111
+        }
+        
+        body.light .movie-card {
+            background: #fff;
+            color: #111
+        }
+        
+        body.light .poster {
+            background: #eee
+        }
+        
+        body.light .filters button {
+            color: #111
+        }
+        
+        body.light nav {
+            background: #fff
+        }
+        
+        body.light .auth-card {
+            color: #111
+        }
+        
+        .hidden {
+            display: none!important
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav id="mainNav">
+        <div style="display:flex;gap:12px;align-items:center">
+            <div class="logo"><span class="mark">🎬</span><span>MovieFlix</span></div>
+        </div>
+
+        <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#movies">Movies</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <div class="nav-actions">
+            <button id="themeToggle" class="btn" title="Toggle theme">🌙</button>
+            <button id="favoritesView" class="btn" title="My Favorites">❤ Favorites</button>
+            <button id="authBtn" class="btn primary">Login / Signup</button>
+            <button id="userBadge" style="display:none"></button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home" aria-label="Featured">
+        <video autoplay muted loop playsinline>
+          <!-- put a hero.mp4 in img/ or replace with a remote video -->
+          <source src="img/hero.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-overlay"></div>
+        <div class="hero-inner" data-aos="zoom-in">
+            <h1>Unlimited movies, unlimited fun.</h1>
+            <p>Professional UI, interactive ratings, favorites & trailers — MovieFlix Pro.</p>
+            <div class="cta">
+                <button class="btn primary" onclick="scrollToMovies()">Explore Now</button>
+                <button class="btn" onclick="openAuthModal()">Login / Signup</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <div class="filters" id="genreFilters">
+            <button class="active" data-genre="all" onclick="filterByGenre('all')">All</button>
+            <button data-genre="Action" onclick="filterByGenre('Action')">Action</button>
+            <button data-genre="Romance" onclick="filterByGenre('Romance')">Romance</button>
+            <button data-genre="Comedy" onclick="filterByGenre('Comedy')">Comedy</button>
+            <button data-genre="Sci-Fi" onclick="filterByGenre('Sci-Fi')">Sci-Fi</button>
+            <button data-genre="Drama" onclick="filterByGenre('Drama')">Drama</button>
+        </div>
+
+        <div class="search-box">
+            <input id="searchInput" type="search" placeholder="Search movies by title, genre or year..." />
+        </div>
+    </div>
+
+    <!-- MOVIES GRID -->
+    <main id="movie-list" aria-live="polite"></main>
+
+    <!-- OPTION MODAL (on movie click) -->
+    <div class="option-modal" id="optionModal" aria-hidden="true">
+        <div class="option-card" role="dialog" aria-modal="true">
+            <h3 id="optTitle">Movie</h3>
+            <div style="font-size:.95rem;color:#ccc" id="optMeta"></div>
+            <div style="margin-top:12px">
+                <button class="opt-btn opt-watch" id="optWatch">🎬 Watch Trailer</button>
+                <button class="opt-btn opt-fav" id="optFav">❤️ Add to Favorites</button>
+                <button class="opt-btn opt-details" id="optDetails">📄 View Details</button>
+                <button class="btn" style="margin-top:8px" id="optClose">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETAILS MODAL -->
+    <div class="modal" id="detailsModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true">
+            <div class="md-left"><img id="mdPoster" src="" alt="Poster"></div>
+            <div class="md-right">
+                <h2 id="mdTitle"></h2>
+                <p id="mdMeta" style="color:#cfcfcf;font-size:.95rem"></p>
+                <p id="mdDesc" style="color:#ddd"></p>
+                <div style="margin-top:10px" id="mdStars"></div>
+                <div class="md-actions">
+                    <button class="btn primary" id="mdTrailerBtn">Play Trailer</button>
+                    <button class="btn" id="mdShareBtn">🔗 Share</button>
+                    <button class="btn fav-btn" id="mdFavBtn">❤ Add to Favorites</button>
+                    <button class="btn" onclick="closeDetails()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div class="modal" id="authModal" aria-hidden="true">
+        <div class="auth-card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <h3 id="authTitle">Login</h3>
+                <div style="cursor:pointer;color:var(--yellow)" onclick="closeAuthModal()">✖</div>
+            </div>
+            <input id="authName" placeholder="Username" />
+            <div style="position:relative" class="toggle-pass">
+                <input id="authPass" placeholder="Password" type="password" />
+                <span class="eye" id="toggleEye" style="position:absolute;right:12px;top:14px;cursor:pointer">👁️</span>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:8px">
+                <button class="btn primary" onclick="submitAuth()">Submit</button>
+                <button class="btn" onclick="toggleAuthMode()">Switch to Signup</button>
+            </div>
+            <p style="color:#bbb;margin-top:10px;font-size:0.9rem">Local demo auth — data stored only in your browser.</p>
+        </div>
+    </div>
+
+    <!-- TRAILER MODAL -->
+    <div class="modal" id="trailerModal" aria-hidden="true">
+        <div class="modal-card" style="max-width:900px;padding:8px;flex-direction:column;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;width:100%">
+                <strong style="color:var(--yellow)">Trailer</strong>
+                <div style="cursor:pointer;color:var(--yellow)" onclick="closeTrailer()">✖</div>
+            </div>
+            <div id="trailerWrap" style="background:#000;border-radius:6px;overflow:hidden;width:100%"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer id="contact">© 2025 <strong>MovieFlix</strong> — Built with ❤️</footer>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init({
+            once: true
+        });
+
+        /* -------------------------
+           Data: movies (your list)
+           ------------------------- */
+        const allMovies = [{
+            title: "Deewane ki Deewaniyat",
+            genre: "Romance, Sci-Fi",
+            year: 2025,
+            rating: 4.2,
+            poster: "img/deewanekideewaniyat.jpg",
+            trailer: "https://www.youtube.com/embed/dGb3acfZp2k",
+            desc: "A heartfelt romance with a sci-fi twist."
+        }, {
+            title: "Avengers",
+            genre: "Action, Superhero",
+            year: 2019,
+            rating: 4.9,
+            poster: "img/avengers.jpg",
+            trailer: "https://www.youtube.com/embed/TcMBFSGVi1c",
+            desc: "The world’s mightiest heroes assemble."
+        }, {
+            title: "Collage Romance",
+            genre: "Romance, Drama",
+            year: 2020,
+            rating: 4.4,
+            poster: "img/collage romance.jpg",
+            trailer: "",
+            desc: "College friends, new relationships, big feelings."
+        }, {
+            title: "Eesho",
+            genre: "Thriller, Drama",
+            year: 2022,
+            rating: 4.1,
+            poster: "img/eesho.jpeg",
+            trailer: "",
+            desc: "A tense drama about choices and consequences."
+        }, {
+            title: "Eternals",
+            genre: "Action, Fantasy",
+            year: 2021,
+            rating: 4.0,
+            poster: "img/eternals.jpg",
+            trailer: "https://www.youtube.com/embed/x_me3xsvDgk",
+            desc: "Immortal beings face new threats."
+        }, {
+            title: "John Wick",
+            genre: "Action, Crime",
+            year: 2017,
+            rating: 4.7,
+            poster: "img/Jhon Wick.jpg",
+            trailer: "https://www.youtube.com/embed/C0BMx-qxsP4",
+            desc: "A retired hitman returns for vengeance."
+        }, {
+            title: "Jurassic World",
+            genre: "Adventure, Sci-Fi",
+            year: 2018,
+            rating: 4.3,
+            poster: "img/jurassic world.jpg",
+            trailer: "",
+            desc: "Dinosaurs and chaos rebooted."
+        }, {
+            title: "KGF",
+            genre: "Action, Drama",
+            year: 2018,
+            rating: 4.8,
+            poster: "img/KGF.jpg",
+            trailer: "",
+            desc: "A gangster saga with style."
+        }, {
+            title: "Kota Factory",
+            genre: "Drama, Education",
+            year: 2019,
+            rating: 4.6,
+            poster: "img/kota factory.jpg",
+            trailer: "",
+            desc: "The student grind, real emotions."
+        }, {
+            title: "Money Heist",
+            genre: "Crime, Thriller",
+            year: 2021,
+            rating: 4.9,
+            poster: "img/money heist.jpg",
+            trailer: "",
+            desc: "A high-stakes heist across the world."
+        }, {
+            title: "Spiderman",
+            genre: "Action, Adventure",
+            year: 2021,
+            rating: 4.5,
+            poster: "img/spiderman1.jpg",
+            trailer: "",
+            desc: "Friendly neighborhood saves the day."
+        }, {
+            title: "The Boys",
+            genre: "Superhero, Action",
+            year: 2022,
+            rating: 4.7,
+            poster: "img/the boys.jpg",
+            trailer: "",
+            desc: "A darker take on heroes."
+        }, {
+            title: "Thor: Love of Thunder",
+            genre: "Action, Fantasy",
+            year: 2022,
+            rating: 4.2,
+            poster: "img/thor love of thunder.jpg",
+            trailer: "",
+            desc: "Gods, laughs, and thunder."
+        }, {
+            title: "Top Gun",
+            genre: "Action, Drama",
+            year: 2022,
+            rating: 4.8,
+            poster: "img/topgun.jpg",
+            trailer: "",
+            desc: "High-flying aerial drama."
+        }, {
+            title: "Uncharted",
+            genre: "Adventure, Action",
+            year: 2022,
+            rating: 4.3,
+            poster: "img/uncharted1.jpg",
+            trailer: "",
+            desc: "Treasure hunt and witty banter."
+        }, {
+            title: "Bahubali",
+            genre: "Action, Epic",
+            year: 2015,
+            rating: 4.9,
+            poster: "img/bahubali.jpg",
+            trailer: "",
+            desc: "A grand epic of kings and battles."
+        }, {
+            title: "PK",
+            genre: "Comedy, Sci-Fi",
+            year: 2014,
+            rating: 4.5,
+            poster: "img/pk.jpg",
+            trailer: "",
+            desc: "An alien questions human ways."
+        }, {
+            title: "Dangal",
+            genre: "Biography, Sports",
+            year: 2016,
+            rating: 4.8,
+            poster: "img/dangal.jpg",
+            trailer: "",
+            desc: "A father's dream, daughters’ triumph."
+        }, {
+            title: "3 Idiots",
+            genre: "Comedy, Drama",
+            year: 2009,
+            rating: 4.9,
+            poster: "img/3idiots.jpg",
+            trailer: "https://www.youtube.com/embed/K0eDlFX9GMc",
+            desc: "Heartfelt coming-of-age journey."
+        }, {
+            title: "Zindagi Na Milegi Dobara",
+            genre: "Adventure, Romance",
+            year: 2011,
+            rating: 4.7,
+            poster: "img/znmd.jpg",
+            trailer: "",
+            desc: "A road trip that changes lives."
+        }];
+
+        /* -------------------------
+           LocalStorage keys/helpers
+           ------------------------- */
+        const LS = {
+            userKey: 'movieflix_user',
+            usersMap: 'movieflix_users',
+            ratingPrefix: 'movieflix_rating_',
+            favPrefix: 'movieflix_fav_',
+            themeLight: 'movieflix_theme_light'
+        };
+
+        function slug(s) {
+            return (s || '').replace(/\s+/g, '_').replace(/[^\w_-]/g, '').toLowerCase();
+        }
+
+        /* -------------------------
+           Elements & state
+           ------------------------- */
+        const movieListEl = document.getElementById('movie-list');
+        const searchInput = document.getElementById('searchInput');
+        const themeToggle = document.getElementById('themeToggle');
+        const favoritesView = document.getElementById('favoritesView');
+        const authBtn = document.getElementById('authBtn');
+        const userBadge = document.getElementById('userBadge');
+
+        const detailsModal = document.getElementById('detailsModal');
+        const mdPoster = document.getElementById('mdPoster');
+        const mdTitle = document.getElementById('mdTitle');
+        const mdMeta = document.getElementById('mdMeta');
+        const mdDesc = document.getElementById('mdDesc');
+        const mdStars = document.getElementById('mdStars');
+        const mdFavBtn = document.getElementById('mdFavBtn');
+
+        const trailerModal = document.getElementById('trailerModal');
+        const trailerWrap = document.getElementById('trailerWrap');
+
+        const authModal = document.getElementById('authModal');
+        const authTitle = document.getElementById('authTitle');
+        const authName = document.getElementById('authName');
+        const authPass = document.getElementById('authPass');
+
+        // option modal (movie click)
+        const optionModal = document.getElementById('optionModal');
+        const optTitle = document.getElementById('optTitle');
+        const optMeta = document.getElementById('optMeta');
+        const optWatch = document.getElementById('optWatch');
+        const optFav = document.getElementById('optFav');
+        const optDetails = document.getElementById('optDetails');
+        const optClose = document.getElementById('optClose');
+
+        let currentDetailTitle = null;
+        let currentMovie = null;
+        let authModeSignup = false;
+
+        /* -------------------------
+           Utilities: storage getters/setters
+           ------------------------- */
+        function getStoredRating(title) {
+            const v = localStorage.getItem(LS.ratingPrefix + slug(title));
+            return v ? Number(v) : null;
+        }
+
+        function setStoredRating(title, val) {
+            localStorage.setItem(LS.ratingPrefix + slug(title), String(val));
+        }
+
+        function isFav(title) {
+            return localStorage.getItem(LS.favPrefix + slug(title)) === '1';
+        }
+
+        function setFav(title, flag) {
+            if (flag) localStorage.setItem(LS.favPrefix + slug(title), '1');
+            else localStorage.removeItem(LS.favPrefix + slug(title));
+        }
+
+        function loggedInUser() {
+            return localStorage.getItem(LS.userKey) || null;
+        }
+
+        function setLoggedInUser(u) {
+            if (u) localStorage.setItem(LS.userKey, u);
+            else localStorage.removeItem(LS.userKey);
+            updateAuthUI();
+        }
+
+        /* -------------------------
+           Stars HTML (string)
+           ------------------------- */
+        function starsHTML(title, baseRating) {
+            const stored = getStoredRating(title);
+            const r = stored !== null ? stored : Math.round(baseRating || 0);
+            let out = `<div class="stars" data-title="${encodeURIComponent(title)}">`;
+            for (let i = 1; i <= 5; i++) {
+                out += `<button class="star ${i<=r ? 'active':''}" data-value="${i}" title="${i} stars">★</button>`;
+            }
+            out += `</div>`;
+            return out;
+        }
+
+        /* -------------------------
+           Create & render cards
+           ------------------------- */
+        function createCard(movie) {
+            const favActive = isFav(movie.title) ? 'active' : '';
+            const shortDesc = (movie.desc || '').slice(0, 110);
+            return `
+      <article class="movie-card" data-title="${encodeURIComponent(movie.title)}" data-aos="fade-up">
+        <img loading="lazy" class="poster" src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/420x320?text=No+Image'"/>
+        <div class="hover-overlay">
+          <div class="desc">${shortDesc}${(movie.desc && movie.desc.length>110)?'...':''}</div>
+          <div class="actions">
+            <button class="btn" data-action="details" data-title="${encodeURIComponent(movie.title)}">View Details</button>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h3>${movie.title}</h3>
+          <p>${movie.genre} • ${movie.year}</p>
+          <div class="meta">
+            <div>${starsHTML(movie.title,movie.rating)}</div>
+            <div class="card-actions">
+              <button class="fav-btn ${favActive}" data-action="fav" data-title="${encodeURIComponent(movie.title)}" title="Toggle Favorite">❤</button>
+              <button class="btn" data-action="trailer" data-trailer="${encodeURIComponent(movie.trailer||'')}">Trailer</button>
+              <button class="btn" data-action="share" data-title="${encodeURIComponent(movie.title)}" data-trailer="${encodeURIComponent(movie.trailer||'')}">🔗 Share</button>
+            </div>
+          </div>
+        </div>
+      </article>
+      `;
+        }
+
+        function displayMovies(list) {
+            if (!list || list.length === 0) {
+                movieListEl.innerHTML = `<div class="no-results" style="padding:40px;text-align:center;color:#aaa">No movies found.</div>`;
+                return;
+            }
+            movieListEl.innerHTML = list.map(createCard).join('');
+            AOS.refresh();
+        }
+
+        /* initial render */
+        displayMovies(allMovies);
+
+        /* -------------------------
+           Delegated events (cards)
+           ------------------------- */
+        movieListEl.addEventListener('click', function(e) {
+            const el = e.target;
+
+            // star click (rating) - require login
+            if (el.classList.contains('star')) {
+                const user = loggedInUser();
+                if (!user) {
+                    alert('Please login to rate movies.');
+                    openAuthModal();
+                    return;
+                }
+                const parent = el.closest('.stars');
+                const title = decodeURIComponent(parent.dataset.title || parent.getAttribute('data-title') || '');
+                const val = Number(el.dataset.value);
+                if (title) {
+                    setStoredRating(title, val);
+                    const spans = parent.querySelectorAll('.star');
+                    spans.forEach((s, idx) => s.classList.toggle('active', idx < val));
+                }
+            }
+
+            // details button inside card - open details modal
+            if (el.dataset.action === 'details') {
+                const title = decodeURIComponent(el.dataset.title);
+                openDetails(encodeURIComponent(title), null);
+                return;
+            }
+
+            // fav toggle (button)
+            if (el.dataset.action === 'fav') {
+                const user = loggedInUser();
+                if (!user) {
+                    alert('Please login to save favorites.');
+                    openAuthModal();
+                    return;
+                }
+                const title = decodeURIComponent(el.dataset.title);
+                const newFav = !el.classList.contains('active');
+                setFav(title, newFav);
+                el.classList.toggle('active', newFav);
+                return;
+            }
+
+            // trailer button inside card
+            if (el.dataset.action === 'trailer') {
+                const enc = el.dataset.trailer || '';
+                openTrailer(enc);
+                return;
+            }
+
+            // share from card
+            if (el.dataset.action === 'share') {
+                const title = decodeURIComponent(el.dataset.title || '');
+                const trailer = decodeURIComponent(el.dataset.trailer || '');
+                shareMovie({
+                    title,
+                    trailer
+                });
+                return;
+            }
+
+            // if clicked on a card (not the internal buttons), open option modal
+            const card = el.closest('.movie-card');
+            if (card) {
+                const title = decodeURIComponent(card.dataset.title || '');
+                const movie = allMovies.find(m => encodeURIComponent(m.title) === encodeURIComponent(title));
+                if (movie) openOptionModal(movie);
+            }
+        });
+
+        /* -------------------------
+           Search & filter
+           ------------------------- */
+        searchInput.addEventListener('input', onSearch);
+
+        function onSearch() {
+            const term = searchInput.value.trim().toLowerCase();
+            const filtered = allMovies.filter(m => m.title.toLowerCase().includes(term) || m.genre.toLowerCase().includes(term) || String(m.year).includes(term));
+            displayMovies(filtered);
+            document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+        }
+
+        function filterByGenre(genre) {
+            document.querySelectorAll('.filters button').forEach(b => b.classList.toggle('active', b.dataset.genre === genre));
+            if (genre === 'all') {
+                displayMovies(allMovies);
+                return;
+            }
+            const filtered = allMovies.filter(m => (m.genre || '').toLowerCase().includes(genre.toLowerCase()));
+            displayMovies(filtered);
+        }
+
+        /* -------------------------
+           Option modal (on card click)
+           ------------------------- */
+        function openOptionModal(movie) {
+            currentMovie = movie;
+            optTitle.textContent = movie.title;
+            optMeta.textContent = `${movie.genre} • ${movie.year}`;
+            optFav.textContent = isFav(movie.title) ? '💔 Remove Favorite' : '❤️ Add to Favorites';
+            optionModal.classList.add('show');
+            optionModal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeOptionModal() {
+            optionModal.classList.remove('show');
+            optionModal.setAttribute('aria-hidden', 'true');
+        }
+
+        optClose.addEventListener('click', closeOptionModal);
+
+        optWatch.addEventListener('click', () => {
+            closeOptionModal();
+            openTrailer(encodeURIComponent(currentMovie.trailer || ''));
+        });
+
+        optFav.addEventListener('click', () => {
+            const user = loggedInUser();
+            if (!user) {
+                alert('Please login to save favorites.');
+                openAuthModal();
+                return;
+            }
+            const newFav = !isFav(currentMovie.title);
+            setFav(currentMovie.title, newFav);
+            optFav.textContent = newFav ? '💔 Remove Favorite' : '❤️ Add to Favorites';
+            displayMovies(allMovies);
+        });
+
+        optDetails.addEventListener('click', () => {
+            closeOptionModal();
+            openDetails(encodeURIComponent(currentMovie.title), null);
+        });
+
+        /* -------------------------
+           Details modal
+           ------------------------- */
+        function openDetails(encodedTitle, ev) {
+            if (ev) ev.stopPropagation();
+            const title = decodeURIComponent(encodedTitle);
+            const movie = allMovies.find(m => m.title === title);
+            if (!movie) return;
+            currentDetailTitle = movie.title;
+            mdPoster.src = movie.poster || '';
+            mdPoster.onerror = function() {
+                this.src = 'https://via.placeholder.com/420x560?text=No+Image';
+            }
+            mdTitle.textContent = movie.title;
+            mdMeta.textContent = `${movie.genre} • ${movie.year}`;
+            mdDesc.textContent = movie.desc || 'No description available.';
+            mdStars.innerHTML = starsHTML(movie.title, movie.rating);
+            mdFavBtn.classList.toggle('active', isFav(movie.title));
+            mdFavBtn.textContent = isFav(movie.title) ? '❤ Favorited' : '❤ Add to Favorites';
+            detailsModal.classList.add('show');
+            detailsModal.setAttribute('aria-hidden', 'false');
+
+            mdTrailerBtn.onclick = () => openTrailer(encodeURIComponent(movie.trailer || ''));
+            mdShareBtn.onclick = () => shareMovie({
+                title: movie.title,
+                trailer: movie.trailer || ''
+            });
+        }
+
+        function closeDetails() {
+            detailsModal.classList.remove('show');
+            detailsModal.setAttribute('aria-hidden', 'true');
+        }
+
+        mdFavBtn.addEventListener('click', function() {
+            const user = loggedInUser();
+            if (!user) {
+                alert('Please login to save favorites.');
+                openAuthModal();
+                return;
+            }
+            if (!currentDetailTitle) return;
+            const newFav = !isFav(currentDetailTitle);
+            setFav(currentDetailTitle, newFav);
+            mdFavBtn.classList.toggle('active', newFav);
+            mdFavBtn.textContent = newFav ? '❤ Favorited' : '❤ Add to Favorites';
+            displayMovies(allMovies);
+        });
+
+        mdStars.addEventListener('click', function(e) {
+            if (e.target.classList.contains('star')) {
+                const user = loggedInUser();
+                if (!user) {
+                    alert('Please login to rate movies.');
+                    openAuthModal();
+                    return;
+                }
+                const val = Number(e.target.dataset.value);
+                setStoredRating(currentDetailTitle, val);
+                mdStars.innerHTML = starsHTML(currentDetailTitle, 0);
+                displayMovies(allMovies);
+            }
+        });
+
+        detailsModal.addEventListener('click', e => {
+            if (e.target === detailsModal) closeDetails();
+        });
+
+        /* -------------------------
+           Trailer modal
+           ------------------------- */
+        function openTrailer(encodedUrl) {
+            const url = decodeURIComponent(encodedUrl || '');
+            if (!url) {
+                alert('Trailer not available for this title.');
+                return;
+            }
+            // If youtube short/normal link present, ensure embed format - the dataset already uses embed links where possible.
+            trailerWrap.innerHTML = `<iframe width="100%" height="480" src="${url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            trailerModal.classList.add('show');
+            trailerModal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeTrailer() {
+            trailerModal.classList.remove('show');
+            trailerModal.setAttribute('aria-hidden', 'true');
+            trailerWrap.innerHTML = '';
+        }
+        trailerModal.addEventListener('click', e => {
+            if (e.target === trailerModal) closeTrailer();
+        });
+
+        /* -------------------------
+           Share movie
+           ------------------------- */
+        function shareMovie({
+            title = '',
+            trailer = ''
+        }) {
+            const pageUrl = window.location.href.split('#')[0];
+            const shareText = `${title} — Watch trailer: ${trailer ? decodeURIComponent(trailer) : 'No trailer available'}\n\nCheck it out on MovieFlix: ${pageUrl}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: `Watch: ${title}`,
+                    text: shareText,
+                    url: pageUrl
+                }).catch(() => {});
+                return;
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Share text copied to clipboard — paste it anywhere to share.');
+                }).catch(() => {
+                    prompt('Copy this to share:', shareText);
+                });
+                return;
+            }
+            prompt('Copy this to share:', shareText);
+        }
+
+        /* -------------------------
+           Auth (local demo)
+           ------------------------- */
+        function openAuthModal() {
+            authModeSignup = false;
+            authTitle.textContent = 'Login';
+            authName.value = '';
+            authPass.value = '';
+            authModal.classList.add('show');
+            authModal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeAuthModal() {
+            authModal.classList.remove('show');
+            authModal.setAttribute('aria-hidden', 'true');
+        }
+
+        function toggleAuthMode() {
+            authModeSignup = !authModeSignup;
+            authTitle.textContent = authModeSignup ? 'Signup' : 'Login';
+        }
+
+        function submitAuth() {
+            const u = authName.value.trim();
+            const p = authPass.value;
+            if (!u || !p) {
+                alert('Please fill both fields');
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem(LS.usersMap) || '{}');
+            if (authModeSignup) {
+                if (users[u]) {
+                    alert('Username exists');
+                    return;
+                }
+                users[u] = p;
+                localStorage.setItem(LS.usersMap, JSON.stringify(users));
+                alert('Signup success — now login.');
+                toggleAuthMode();
+                return;
+            } else {
+                if (users[u] && users[u] === p) {
+                    setLoggedInUser(u);
+                    closeAuthModal();
+                    alert('Welcome, ' + u + '!');
+                } else alert('Invalid credentials — try Signup.');
+            }
+        }
+
+        document.getElementById('toggleEye').addEventListener('click', function() {
+            authPass.type = authPass.type === 'password' ? 'text' : 'password';
+            this.textContent = authPass.type === 'password' ? '👁️' : '🙈';
+        });
+        authBtn.addEventListener('click', openAuthModal);
+
+        function updateAuthUI() {
+            const user = loggedInUser();
+            if (user) {
+                authBtn.style.display = 'none';
+                userBadge.style.display = 'inline-block';
+                userBadge.textContent = user + ' ⌄';
+            } else {
+                authBtn.style.display = 'inline-block';
+                userBadge.style.display = 'none';
+                userBadge.textContent = '';
+            }
+        }
+        updateAuthUI();
+        userBadge.addEventListener('click', () => {
+            if (confirm('Logout?')) {
+                setLoggedInUser(null);
+                alert('Logged out');
+            }
+        });
+        authModal.addEventListener('click', e => {
+            if (e.target === authModal) closeAuthModal();
+        });
+
+        /* -------------------------
+           Favorites view
+           ------------------------- */
+        favoritesView.addEventListener('click', function() {
+            const user = loggedInUser();
+            if (!user) {
+                alert('Please login to view favorites.');
+                openAuthModal();
+                return;
+            }
+            const favs = allMovies.filter(m => isFav(m.title));
+            if (!favs.length) {
+                alert('No favorites yet. Click ❤ on any movie to add.');
+                return;
+            }
+            displayMovies(favs);
+        });
+
+        /* -------------------------
+           Theme toggle
+           ------------------------- */
+        function applyTheme() {
+            const light = localStorage.getItem(LS.themeLight) === '1';
+            document.body.classList.toggle('light', light);
+            themeToggle.textContent = light ? '☀️' : '🌙';
+        }
+        themeToggle.addEventListener('click', () => {
+            const cur = localStorage.getItem(LS.themeLight) === '1';
+            localStorage.setItem(LS.themeLight, cur ? '0' : '1');
+            applyTheme();
+        });
+        applyTheme();
+
+        /* -------------------------
+           Navbar shrink on scroll
+           ------------------------- */
+        const mainNav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) mainNav.classList.add('shrink');
+            else mainNav.classList.remove('shrink');
+        });
+
+        /* -------------------------
+           Utility: scroll to movies
+           ------------------------- */
+        function scrollToMovies() {
+            document.getElementById('movie-list').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        /* -------------------------
+           ESC close for modals
+           ------------------------- */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAuthModal();
+                closeDetails();
+                closeTrailer();
+                closeOptionModal();
+            }
+        });
+
+        /* -------------------------
+           Clicking outside modal closes
+           ------------------------- */
+        document.getElementById('detailsModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('detailsModal')) closeDetails();
+        });
+        document.getElementById('optionModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('optionModal')) closeOptionModal();
+        });
+
+        /* -------------------------
+           Ensure grid updates on load (apply stored ratings)
+           ------------------------- */
+        displayMovies(allMovies);
+    </script>
+</body>
+
+</html>
